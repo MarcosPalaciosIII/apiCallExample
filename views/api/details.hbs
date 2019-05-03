@@ -1,0 +1,39 @@
+{{!-- With the variable that you are passing to see if the infomation is in the DB and not from the API, you can make a conditional statement in handlebars to see how you will display the page --}}
+{{#if pokeInDb}}
+  <h2> {{poke.name}} Details </h2>
+
+  <h3> ID: {{poke.theId}} </h3>
+
+  <img src="{{poke.image}}" alt="{{poke.name}} image default front">
+
+  <h3> Flavor Text </h3>
+
+  <p> {{speciesFlavorText}} </p>
+
+  <br>
+  <h3> Already Saved to Favorites </h3>
+{{else}}
+
+  {{!-- If you see the css under #pokemonDetailsForm, you will notice that the inputs are targeted and set to display: none; in order to hide the values --}}
+  <form id="pokemonDetailsForm" action="/api/save" method="post">
+
+    {{!-- when setting input fields in a form, give each input a label. You can link them by making the for="" of the label the same name as the id="" of the input --}}
+    <label for="nameInput"> <h2> {{poke.name}} Details </h2> </label>
+    <input id="nameInput" type="text" name="theName" value="{{poke.name}}">
+
+    <label for="idInput"> <h3> ID: {{poke.id}} </h3> </label>
+    <input id="idInput" type="Number" name="theId" value="{{poke.id}}">
+
+    <label for="imageInput"> <img src="{{poke.sprites.front_default}}" alt="{{poke.name}} image default front"> </label>
+    <input id="imageInput" type="text" name="image" value="{{poke.sprites.front_default}}">
+
+    <span> <h3> Flavor Text </h3> </span>
+    <label for="flavorTextInput"> <p> {{species.flavor_text}} </p> </label>
+    {{!-- When you have multiple inputs (an array of info), you only require one label tag. In your route you can then manipulate the information from the req.body.<name> of the multiple inputs in a for loop or just save as is (as long as you set the Model to type: []  --- * see Pokemon Model for more notes on this *) --}}
+    {{#each flavorText}}
+      <input id="flavorTextInput" type="text" name="flavorText" value="{{this.flavor_text}}">
+    {{/each}}
+
+    <button> Add To Favorites </button>
+  </form>
+{{/if}}

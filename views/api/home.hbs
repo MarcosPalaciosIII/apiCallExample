@@ -1,0 +1,8 @@
+<h2> API Home </h2>
+
+
+{{#each pokes.results}}
+{{!-- when using an each in handlebars, you can use {{@index}} to get the index of the array --}}
+  <a href="/api/details/{{@index}}"> <h3> {{this.name}} </h3> </a>
+  {{!-- since this api has pokemon showing in order of number plus the way we are displaying all of them, we dont have to make a form in order to make a call to the route and can instead use an anchor tag to call the get route --}}
+{{/each}}
